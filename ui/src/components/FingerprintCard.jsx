@@ -3,9 +3,11 @@ import { Card, Button } from "react-bootstrap";
 
 const FingerprintCard = () => {
   return (
-    <Card>
-      <Button>Fingerprint Me</Button>
-    </Card>
+    <div className="fingerprint-card">
+      <Card>
+        <Button>Fingerprint Me</Button>
+      </Card>
+    </div>
   );
 };
 
