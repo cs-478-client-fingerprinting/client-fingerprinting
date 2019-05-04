@@ -5,11 +5,10 @@ import "./style.sass";
 
 const App = () => {
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       const res = await request("/fingerprint");
       console.log(res);
-    };
-    fetchData();
+    })();
   }, []);
 
   return (

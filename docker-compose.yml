@@ -1,0 +1,45 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  server:
+    container_name: fingerprinting-server
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    volumes:
+      - ./server:/go/src/app
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+    environment:
+      - GO111MODULE=on
+
+  web:
+    container_name: fingerprinting-ui
+    build:
+      dockerfile: Dockerfile
+      context: ./ui
+    volumes:
+      - "./ui:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+    links:
+      - server
