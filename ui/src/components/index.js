@@ -1,2 +1,3 @@
-export { default as Header } from "./Header";
-export { default as FingerprintCard } from "./FingerprintCard";
+export { Navigation } from "./navigation";
+export { FingerprintMe } from "./fingerprint-me";
+export { FingerprintCollection } from "./fingerprint-collection";
