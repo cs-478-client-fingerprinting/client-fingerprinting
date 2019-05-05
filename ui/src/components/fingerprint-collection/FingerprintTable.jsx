@@ -13,7 +13,7 @@ const FingerprintTable = () => {
         <FingerprintTableHead />
         <FingerprintTableBody>
           {data.map(rowData => (
-            <FingerprintTableRow data={rowData} />
+            <FingerprintTableRow data={rowData} key={rowData} />
           ))}
         </FingerprintTableBody>
       </Table>
