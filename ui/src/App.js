@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Header, FingerprintCard } from "./components";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { FingerprintMe, Navigation, FingerprintCollection } from "./components";
 import { request } from "./utils";
-import "./style.sass";
 
 const App = () => {
   useEffect(() => {
@@ -12,10 +12,11 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <Header />
-      <FingerprintCard />
-    </div>
+    <Router>
+      <Navigation />
+      <Route exact path="/" component={FingerprintMe} />
+      <Route path="/collection" component={FingerprintCollection} />
+    </Router>
   );
 };
 
