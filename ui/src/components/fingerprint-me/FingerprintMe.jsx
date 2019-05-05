@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import FingerprintPrompt from "./FingerprintPrompt";
 import "./style.sass";
 import FingerprintName from "./FingerprintName";
