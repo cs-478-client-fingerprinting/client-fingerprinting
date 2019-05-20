@@ -1,18 +1,24 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import "./style.sass";
 import FingerprintTable from "./FingerprintTable";
+import { Fade } from "react-bootstrap";
+import { useMount } from "../../utils";
 
 const FingerprintCollection = ({ history }) => {
+  const [mount, exit] = useMount(true);
+
   useEffect(() => {
-    console.log(history.location.state.name);
-  }, []);
+    console.log(history.location.state && history.location.state);
+  }, [history.location]);
 
   return (
-    <Fragment>
-      <Header />
-      <FingerprintTable />
-    </Fragment>
+    <Fade in={mount} onExited={exit}>
+      <div>
+        <Header />
+        <FingerprintTable />
+      </div>
+    </Fade>
   );
 };
 
