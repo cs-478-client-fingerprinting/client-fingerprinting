@@ -11,7 +11,7 @@
 
 import sleep from "./sleep";
 export const request = async (url, options) => {
-  await sleep(2000);
+  await sleep(500);
   switch (url) {
     case "/name":
       return null;

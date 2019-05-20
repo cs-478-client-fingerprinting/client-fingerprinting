@@ -9,7 +9,8 @@ const FingerprintEnterName = ({ open, handleNameFormSubmit }) => {
 
   return (
     open && (
-      <Card>
+      <Card className="enter-name">
+        <h4>Enter a name to go with your fingerprint</h4>
         <Form
           className="fingerprint-name"
           onSubmit={() => handleNameFormSubmit(name)}
@@ -23,7 +24,9 @@ const FingerprintEnterName = ({ open, handleNameFormSubmit }) => {
             />
           </Form.Item>
           <Form.Item>
-            <Button type="submit">Remember Me</Button>
+            <Button type="primary" block>
+              Remember Me
+            </Button>
           </Form.Item>
         </Form>
       </Card>

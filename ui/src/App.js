@@ -14,12 +14,12 @@ const store = createStore(
 
 const App = () => (
   <Provider store={store}>
-    <Navigation>
-      <Router>
+    <Router>
+      <Navigation>
         <Route exact path="/" component={FingerprintMe} />
         <Route path="/collection" component={FingerprintCollection} />
-      </Router>
-    </Navigation>
+      </Navigation>
+    </Router>
   </Provider>
 );
 
