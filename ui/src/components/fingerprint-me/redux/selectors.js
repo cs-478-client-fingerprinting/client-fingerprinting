@@ -9,3 +9,4 @@ export const getFingerprintingShow = state =>
 export const getProgress = state => state.fingerprintMe.progress;
 export const getName = state => state.fingerprintMe.name;
 export const getShowNameShow = state => state.fingerprintMe.showNameShow;
+export const getShowNameOpen = state => state.fingerprintMe.showNameOpen;

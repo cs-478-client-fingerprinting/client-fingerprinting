@@ -1,41 +1,39 @@
 import React, { useState } from "react";
-import { Form, Button, Fade } from "react-bootstrap";
+import { Form, Button, Input, Card } from "antd";
 import { connect } from "react-redux";
-import { getEnterNameOpen, getShowNameShow } from "../redux/selectors";
-import { closeEnterName, setShowName } from "../redux/actions";
+import { getEnterNameOpen } from "../redux/selectors";
+import { handleNameFormSubmit } from "../redux/actions";
 
-const FingerprintEnterName = ({ open, show, closeEnterName }) => {
+const FingerprintEnterName = ({ open, handleNameFormSubmit }) => {
   const [name, setName] = useState("");
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    unsetShowName();
-  };
 
   return (
     open && (
-      <Fade in={show} onExited={() => closeEnterName(name)}>
-        <Form className="fingerprint-name" onSubmit={handleSubmit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Control
+      <Card>
+        <Form
+          className="fingerprint-name"
+          onSubmit={() => handleNameFormSubmit(name)}
+        >
+          <Form.Item controlId="formBasicEmail">
+            <Input
               type="name"
               placeholder="Enter your name"
               onChange={e => setName(e.target.value)}
               value={name}
             />
-          </Form.Group>
-          <Button type="submit">Remember Me</Button>
+          </Form.Item>
+          <Form.Item>
+            <Button type="submit">Remember Me</Button>
+          </Form.Item>
         </Form>
-      </Fade>
+      </Card>
     )
   );
 };
 
 export default connect(
   state => ({
-    open: getEnterNameOpen(state),
-    show: getEnterNameShow(state)
+    open: getEnterNameOpen(state)
   }),
-  { closeEnterName, setShowName }
+  { handleNameFormSubmit }
 )(FingerprintEnterName);

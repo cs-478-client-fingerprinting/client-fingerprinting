@@ -7,7 +7,8 @@ import {
   PROGRESS_SET,
   FINGERPRINTING_OPEN,
   FINGERPRINT_SET,
-  NAME_SET
+  NAME_SET,
+  FINGERPRINTING_CLOSE
 } from "./actions";
 
 const initialState = {
@@ -25,22 +26,19 @@ const initialState = {
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case FINGERPRINT_CHECK_COMPLETE:
-      return { ...state, doesFingerprintExist: payload };
-
     case ENTER_NAME_OPEN:
       return {
         ...state,
         enterNameOpen: true,
         enterNameShow: true,
-        fingerprintingShow: false
+        fingerprintingOpen: false
       };
 
     case WARNING_CLOSE:
       return { ...state, warningOpen: false };
 
     case FINGERPRINTING_OPEN:
-      return { ...state, fingerprintingOpen: true, fingerprintingShow: true };
+      return { ...state, fingerprintingOpen: true, warningOpen: false };
 
     case ENTER_NAME_CLOSE:
       return { ...state, enterNameOpen: false, name: payload };
@@ -53,7 +51,8 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         showNameOpen: true,
         showNameShow: true,
-        fingerprintingOpen: false
+        fingerprintingOpen: false,
+        name: payload || state.payload
       };
 
     case PROGRESS_SET:
@@ -61,6 +60,9 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case FINGERPRINT_SET:
       return { ...state, fingerprint: payload };
+
+    case FINGERPRINTING_CLOSE:
+      return { ...state, fingerprintingShow: false };
 
     default:
       return state;
