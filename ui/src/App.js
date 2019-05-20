@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 import { FingerprintMe, Navigation, FingerprintCollection } from "./components";
-import { request } from "./utils";
+import rootReducer from "./redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const App = () => {
-  useEffect(() => {
-    (async () => {
-      const res = await request("/fingerprint");
-      console.log(res);
-    })();
-  }, []);
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
-  return (
+const App = () => (
+  <Provider store={store}>
     <Router>
-      <Navigation />
-      <Route exact path="/" component={FingerprintMe} />
-      <Route path="/collection" component={FingerprintCollection} />
+      <Navigation>
+        <Route exact path="/" component={FingerprintMe} />
+        <Route path="/collection" component={FingerprintCollection} />
+      </Navigation>
     </Router>
-  );
-};
+  </Provider>
+);
 
 export default App;

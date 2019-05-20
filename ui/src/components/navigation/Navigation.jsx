@@ -1,18 +1,31 @@
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Layout, Menu, Breadcrumb, Icon } from "antd";
+import { Link } from "react-router-dom";
 import "./style.sass";
 
-const Navigation = () => (
-  <Navbar variant="dark" expand="lg">
-    <Navbar.Brand href="/">Client Fingerprinting</Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
-      <Nav className="mr-auto">
-        <Nav.Link href="/">Fingerprint Me</Nav.Link>
-        <Nav.Link href="/collection">Fingerprint Collection</Nav.Link>
-      </Nav>
-    </Navbar.Collapse>
-  </Navbar>
+const { Header } = Layout;
+
+const Navigation = ({ children }) => (
+  <Layout className="layout">
+    <Header className="header">
+      <div className="logo">
+        <Link to="/#">
+          <h4>Client Fingerprinting</h4>
+        </Link>
+      </div>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={["2"]}
+        style={{ lineHeight: "64px" }}
+      >
+        <Menu.Item key="1">
+          <Link to="/">Fingerprint Me</Link>
+        </Menu.Item>
+      </Menu>
+    </Header>
+    {children}
+  </Layout>
 );
 
 export default Navigation;

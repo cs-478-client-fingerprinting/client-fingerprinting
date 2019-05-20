@@ -1,1 +1,1 @@
-export { default as FingerprintMe } from "./FingerprintMe";
+export { default as FingerprintMe } from "./components/FingerprintMe";
