@@ -13,7 +13,7 @@ const FingerprintEnterName = ({ open, handleNameFormSubmit }) => {
         <h4>Enter a name to go with your fingerprint</h4>
         <Form
           className="fingerprint-name"
-          onSubmit={() => handleNameFormSubmit(name)}
+          onSubmit={handleNameFormSubmit(name)}
         >
           <Form.Item controlId="formBasicEmail">
             <Input
@@ -24,7 +24,7 @@ const FingerprintEnterName = ({ open, handleNameFormSubmit }) => {
             />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" block>
+            <Button type="primary" htmlType="submit" block>
               Remember Me
             </Button>
           </Form.Item>

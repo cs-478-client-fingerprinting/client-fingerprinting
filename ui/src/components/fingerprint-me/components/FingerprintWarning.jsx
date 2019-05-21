@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button } from "antd";
-
+import Animate from "rc-animate";
 import { connect } from "react-redux";
 import { startFingerprinting } from "../redux/actions";
 import { getWarningOpen } from "../redux/selectors";

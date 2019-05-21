@@ -41,7 +41,7 @@ export const startFingerprinting = () => async (dispatch, getState) => {
   dispatch(name ? openShowName() : openEnterName());
 };
 
-export const handleNameFormSubmit = name => e => dispatch => {
+export const handleNameFormSubmit = name => dispatch => e => {
   e.preventDefault();
   e.stopPropagation();
   dispatch(openShowName(name));
