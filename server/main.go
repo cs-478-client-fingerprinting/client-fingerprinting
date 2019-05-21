@@ -13,6 +13,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/fingerprint", controllers.Test).Methods("POST", "GET")
+	router.HandleFunc("/name", controllers.GetName).Methods("POST", "GET")
 
 	port := os.Getenv("PORT") //Get port from .env file, we did not specify any port so this should return an empty string when tested locally
 	if port == "" {

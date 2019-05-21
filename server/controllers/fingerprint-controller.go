@@ -1,13 +1,26 @@
 package controllers
 
 import (
-	"net/http"
-
+	"fingerprinting/models"
 	u "fingerprinting/utils"
+	"net/http"
 )
 
 var Test = func(w http.ResponseWriter, r *http.Request) {
 	resp := map[string]interface{}{"Hello": "World"}
+	u.Respond(w, resp)
+}
+
+var GetName = func(w http.ResponseWriter, r *http.Request) {
+
+	sample := u.ReadFingerprint(w, r)
+	fingerprint := &models.Fingerprint{}
+	err := models.GetFingerprintFromSample(sample, fingerprint)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	}
+	// name := fingerprint.Name
+	resp := u.Message(true, "success")
 	u.Respond(w, resp)
 }
 
