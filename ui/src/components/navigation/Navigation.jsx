@@ -1,17 +1,21 @@
 import React from "react";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import { Link } from "react-router-dom";
+import { Layout, Menu } from "antd";
+import { Fingerprint } from "@material-ui/icons";
+import { NavLink } from "react-router-dom";
 import "./style.sass";
 
 const { Header } = Layout;
+
+const refresh = () => window.location.reload();
 
 const Navigation = ({ children }) => (
   <Layout className="layout">
     <Header className="header">
       <div className="logo">
-        <Link to="/#">
+        <Fingerprint className="icon" />
+        <NavLink to="/" onClick={refresh}>
           <h4>Client Fingerprinting</h4>
-        </Link>
+        </NavLink>
       </div>
       <Menu
         theme="dark"
@@ -20,7 +24,7 @@ const Navigation = ({ children }) => (
         style={{ lineHeight: "64px" }}
       >
         <Menu.Item key="1">
-          <Link to="/">Fingerprint Me</Link>
+          <NavLink to="/">Fingerprint Me</NavLink>
         </Menu.Item>
       </Menu>
     </Header>

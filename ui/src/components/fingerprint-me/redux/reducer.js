@@ -1,5 +1,4 @@
 import {
-  FINGERPRINT_CHECK_COMPLETE,
   WARNING_CLOSE,
   ENTER_NAME_CLOSE,
   ENTER_NAME_OPEN,
@@ -15,9 +14,7 @@ const initialState = {
   loading: false,
   warningOpen: true,
   enterNameOpen: false,
-  enterNameShow: false,
   fingerprintingOpen: false,
-  fingerprintingShow: false,
   showNameOpen: false,
   name: "",
   progress: 0,
@@ -30,7 +27,6 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         enterNameOpen: true,
-        enterNameShow: true,
         fingerprintingOpen: false
       };
 
@@ -50,8 +46,8 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         showNameOpen: true,
-        showNameShow: true,
         fingerprintingOpen: false,
+        enterNameOpen: false,
         name: payload || state.payload
       };
 
@@ -62,7 +58,7 @@ const reducer = (state = initialState, { type, payload }) => {
       return { ...state, fingerprint: payload };
 
     case FINGERPRINTING_CLOSE:
-      return { ...state, fingerprintingShow: false };
+      return { ...state, fingerprintingOpen: false };
 
     default:
       return state;
