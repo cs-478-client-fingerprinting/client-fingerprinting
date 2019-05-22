@@ -1,21 +1,13 @@
-FROM golang:1.11-alpine
-RUN apk add git
+FROM golang
+WORKDIR go/src/fingerprinting
 
-# Set the Current Working Directory inside the container
-WORKDIR $GOPATH/src/fingerprinting
-
-# Copy everything from the current directory to the PWD(Present Working Directory) inside the container
 COPY . .
 
-# Download all the dependencies
-# https://stackoverflow.com/questions/28031603/what-do-three-dots-mean-in-go-command-line-invocations
 RUN go get ./...
-
-# Install the package
 RUN go install -v ./...
+# RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
 
-# This container exposes port 8080 to the outside world
 EXPOSE 8000
 
-# Run the executable
+# ENTRYPOINT CompileDaemon -log-prefix=false -build="go build ." -command="fingerprinting"
 CMD ["fingerprinting"]

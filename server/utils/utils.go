@@ -8,7 +8,7 @@ import (
 )
 
 // Message cruft...
-func Message(status bool, message string) map[string]interface{} {
+func Message(status string, message string) map[string]interface{} {
 	return map[string]interface{}{"status": status, "message": message}
 }
 

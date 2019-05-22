@@ -1,8 +1,6 @@
 package models
 
 import (
-	"errors"
-
 	"github.com/jinzhu/gorm"
 )
 
@@ -16,10 +14,9 @@ type Fingerprint struct {
 }
 
 // GetFingerprintFromSample Comment
-func GetFingerprintFromSample(sample *Fingerprint, fingerprint *Fingerprint) error {
+func GetFingerprintFromSample(sample *Fingerprint, fingerprint *Fingerprint) {
 	newFingerprint := &Fingerprint{}
 	// err := GetDB().Table("fingerprints").Where("id = ?", id).First(fingerprint).Error
 
 	fingerprint = newFingerprint
-	return errors.New("Bad")
 }
