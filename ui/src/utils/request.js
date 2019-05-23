@@ -4,10 +4,11 @@ export const request = async (url, options) => {
     return await res.json();
   } catch (e) {
     console.error(e);
+    return null;
   }
 };
 
-// Mok\ck requests
+// Mock requests
 
 // import sleep from "./sleep";
 // export const request = async (url, options) => {

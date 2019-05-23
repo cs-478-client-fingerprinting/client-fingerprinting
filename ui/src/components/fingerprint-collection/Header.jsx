@@ -1,10 +1,9 @@
 import React from "react";
-import { Jumbotron } from "react-bootstrap";
 
 const Header = () => (
-  <Jumbotron className="Fingerprint-header">
+  <dic className="Fingerprint-header">
     <h1>Client Fingerprints</h1>
-  </Jumbotron>
+  </dic>
 );
 
 export default Header;

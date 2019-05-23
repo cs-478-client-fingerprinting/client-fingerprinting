@@ -23,7 +23,7 @@ services:
     build: ./server
     restart: always
     volumes:
-      - ./server:/go/src/app
+      - "./server:/go/src/fingerprinting"
     ports:
       - 8000:8000
     environment:
