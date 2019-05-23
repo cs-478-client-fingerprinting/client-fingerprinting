@@ -14,7 +14,7 @@ export const NAME_SET = "NAME_SET";
 export const FINGERPRINTING_CLOSE = "FINGERPRINTING_CLOSE";
 
 const createFingerprint = () => ({
-  screen: window.screen.pixelDepth
+  pixelDepth: window.screen.pixelDepth
 });
 
 /* Actions */
@@ -27,17 +27,17 @@ export const startFingerprinting = () => async (dispatch, getState) => {
   await sleep(200);
   dispatch(setProgress(20));
 
-  const name = await request("/name", {
+  const res = await request("/fingerprint", {
     body: JSON.stringify(fingerprint),
     method: "POST"
   });
 
   dispatch(setFingerprint(fingerprint));
-  dispatch(setName(name));
+  res.name && dispatch(setName(res.name));
   dispatch(setProgress(100));
 
   await sleep(600);
-  dispatch(name.error ? openShowName() : openEnterName());
+  dispatch(res.exists ? openShowName() : openEnterName());
 };
 
 export const handleNameFormSubmit = name => dispatch => e => {

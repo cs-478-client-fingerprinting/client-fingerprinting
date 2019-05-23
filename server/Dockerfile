@@ -1,13 +1,13 @@
-FROM golang
-WORKDIR go/src/fingerprinting
+FROM node
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
 
 COPY . .
 
-RUN go get ./...
-RUN go install -v ./...
-# RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
+EXPOSE 8080
 
-EXPOSE 8000
-
-# ENTRYPOINT CompileDaemon -log-prefix=false -build="go build ." -command="fingerprinting"
-CMD ["fingerprinting"]
+CMD [ "npm", "run", "dev" ]
