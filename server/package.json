@@ -1,0 +1,20 @@
+{
+  "name": "client-fingerprinting",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node -r esm ./bin/www",
+    "dev": "nodemon -r esm ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "esm": "^3.2.25",
+    "express": "~4.15.5",
+    "mongoose": "^5.5.10",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.19.0",
+    "serve-favicon": "~2.4.5"
+  }
+}
