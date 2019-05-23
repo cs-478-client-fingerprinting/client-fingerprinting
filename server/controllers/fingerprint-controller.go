@@ -18,8 +18,7 @@ var GetName = func(w http.ResponseWriter, r *http.Request) {
 	fingerprint := &models.Fingerprint{}
 	models.GetFingerprintFromSample(sample, fingerprint)
 	// name := fingerprint.Name
-	resp := u.Message("Error", "Fingerprint Not Found")
-	u.Respond(w, resp)
+	u.SendError(w, "Fingerprint Not Found")
 }
 
 // var PostFingerprint = func(w http.ResponseWriter, r *http.Request) {

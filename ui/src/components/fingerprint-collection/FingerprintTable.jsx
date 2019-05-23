@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table } from "antd";
 import FingerprintTableHead from "./FingerprintTableHead";
 import FingerprintTableBody from "./FingerprintTableBody";
 import FingerprintTableRow from "./FingerprintTableRow";

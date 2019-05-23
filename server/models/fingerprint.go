@@ -13,6 +13,8 @@ type Fingerprint struct {
 	Browser         uint   `json:"browser"`
 }
 
+// USE THIS: https://github.com/go-bongo/bongo
+
 // GetFingerprintFromSample Comment
 func GetFingerprintFromSample(sample *Fingerprint, fingerprint *Fingerprint) {
 	newFingerprint := &Fingerprint{}

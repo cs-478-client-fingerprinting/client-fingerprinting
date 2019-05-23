@@ -7,9 +7,17 @@ import (
 	"net/http"
 )
 
-// Message cruft...
-func Message(status string, message string) map[string]interface{} {
-	return map[string]interface{}{"status": status, "message": message}
+// SendMessage cruft...
+func SendMessage(w http.ResponseWriter, message string) {
+	data := map[string]interface{}{"message": message}
+	Respond(w, data)
+}
+
+// SendError more cruft
+func SendError(w http.ResponseWriter, message string) {
+	data := map[string]interface{}{"message": message}
+	w.WriteHeader(http.StatusNotFound)
+	Respond(w, data)
 }
 
 // Respond sends json response
