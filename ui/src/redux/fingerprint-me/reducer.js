@@ -34,7 +34,12 @@ const reducer = (state = initialState, { type, payload }) => {
       return { ...state, warningOpen: false };
 
     case FINGERPRINTING_OPEN:
-      return { ...state, fingerprintingOpen: true, warningOpen: false };
+      return {
+        ...state,
+        fingerprintingOpen: true,
+        warningOpen: false,
+        showNameOpen: false
+      };
 
     case ENTER_NAME_CLOSE:
       return { ...state, enterNameOpen: false, name: payload };
@@ -48,7 +53,7 @@ const reducer = (state = initialState, { type, payload }) => {
         showNameOpen: true,
         fingerprintingOpen: false,
         enterNameOpen: false,
-        name: payload || state.payload
+        name: payload || state.name
       };
 
     case PROGRESS_SET:

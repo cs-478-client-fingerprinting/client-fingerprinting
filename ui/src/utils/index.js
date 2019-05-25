@@ -1,2 +1,3 @@
 export { request } from "./request";
-export { useMount } from "./useMount";
+export { sleep } from "./sleep";
+export { useReveal } from "./useReveal";

@@ -1,7 +1,14 @@
-import React, { Fragment } from "react";
-import { openShowName, openEnterName } from "../redux/actions";
+import React from "react";
+import {
+  openShowName,
+  openFingerprinting
+} from "../../redux/fingerprint-me/actions";
 import { connect } from "react-redux";
-import { getName, getShowNameOpen, getFingerprint } from "../redux/selectors";
+import {
+  getName,
+  getShowNameOpen,
+  getFingerprint
+} from "../../redux/fingerprint-me/selectors";
 import { Button, Card, Table } from "antd";
 
 const columns = [
@@ -27,10 +34,16 @@ const formatFingerprint = fingerprint =>
     key: idx
   }));
 
-export const FingerprintShowName = ({ open, name, fingerprint, stats }) => {
+export const FingerprintShowName = ({
+  open,
+  name,
+  fingerprint,
+  stats,
+  openFingerprinting
+}) => {
   return (
     open && (
-      <Fragment>
+      <div className="fingerprint-container">
         <h1>Your Fingerprint</h1>
         <Card bordered={false} className="fingerprint-card">
           {console.log(formatFingerprint(fingerprint))}
@@ -44,7 +57,12 @@ export const FingerprintShowName = ({ open, name, fingerprint, stats }) => {
             />
           </div>
           <div className="fingerprint-buttons-container">
-            <Button block type="primary" className="fingerprint-button" onClick>
+            <Button
+              block
+              type="primary"
+              className="fingerprint-button"
+              onClick={openFingerprinting}
+            >
               Try Again
             </Button>
             <Button block type="danger" className="fingerprint-button">
@@ -52,7 +70,7 @@ export const FingerprintShowName = ({ open, name, fingerprint, stats }) => {
             </Button>
           </div>
         </Card>
-      </Fragment>
+      </div>
     )
   );
 };
@@ -68,5 +86,5 @@ export default connect(
     name: getName(state),
     fingerprint: getFingerprint(state)
   }),
-  { openShowName, openEnterName }
+  { openShowName, openFingerprinting }
 )(FingerprintShowName);

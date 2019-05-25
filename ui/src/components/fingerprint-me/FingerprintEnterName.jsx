@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Form, Button, Input, Card } from "antd";
 import { connect } from "react-redux";
-import { getEnterNameOpen } from "../redux/selectors";
-import { handleNameFormSubmit } from "../redux/actions";
+import { getEnterNameOpen } from "../../redux/fingerprint-me/selectors";
+import { handleNameFormSubmit } from "../../redux/fingerprint-me/actions";
 
 const FingerprintEnterName = ({ open, handleNameFormSubmit }) => {
   const [name, setName] = useState("");

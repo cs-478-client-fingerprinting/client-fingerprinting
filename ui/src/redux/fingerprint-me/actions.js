@@ -1,6 +1,5 @@
-import { request } from "../../../utils";
-import { getFingerprint, getName } from "./selectors";
-import sleep from "../../../utils/sleep";
+import { request, sleep } from "../../utils";
+import { md5 } from "md5";
 
 export const FINGERPRINT_CREATE = "FINGERPRINT_CREATE";
 export const FINGERPRINT_SET = "FINGERPRINT_SET";
@@ -13,15 +12,36 @@ export const FINGERPRINTING_OPEN = "FINGERPRINTING_OPEN";
 export const NAME_SET = "NAME_SET";
 export const FINGERPRINTING_CLOSE = "FINGERPRINTING_CLOSE";
 
-const createFingerprint = () => ({
-  pixelDepth: window.screen.pixelDepth
+const createCanvasFingerprint = canvas => {
+  const ctx = canvas.current.getContext("2d");
+
+  // Text with lowercase/uppercase/punctuation symbols
+  var txt = "Network Security - Client Fingerprinting";
+  ctx.textBaseline = "top";
+
+  // The most common type
+  ctx.font = "14px 'Arial'";
+  ctx.textBaseline = "alphabetic";
+  ctx.fillStyle = "#f60";
+  ctx.fillRect(125, 1, 62, 20);
+
+  // Some tricks for color mixing to increase the difference in rendering
+  ctx.fillStyle = "#069";
+  ctx.fillText(txt, 2, 15);
+  ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+  ctx.fillText(txt, 4, 17);
+
+  return console.log(md5(canvas.current.toDataURL()));
+};
+
+const createFingerprint = canvas => ({
+  pixelDepth: window.screen.pixelDepth,
+  canvas: createCanvasFingerprint(canvas)
 });
 
 /* Actions */
-export const startFingerprinting = () => async (dispatch, getState) => {
-  dispatch(openFingerprinting());
-
-  const fingerprint = createFingerprint();
+export const startFingerprinting = canvas => async (dispatch, getState) => {
+  const fingerprint = createFingerprint(canvas);
   console.log(window, fingerprint);
 
   await sleep(200);
@@ -38,6 +58,7 @@ export const startFingerprinting = () => async (dispatch, getState) => {
 
   await sleep(600);
   dispatch(res.exists ? openShowName() : openEnterName());
+  dispatch(setProgress(0));
 };
 
 export const handleNameFormSubmit = name => dispatch => e => {
