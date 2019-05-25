@@ -6,10 +6,17 @@ import { json, urlencoded } from "body-parser";
 
 import fingerprint from "./routes/fingerprint";
 
+// DB Init
+// mongoose.connect(
+//   "mongodb+srv://admin:" +
+//     process.env.MONGO_ATLAS_PW +
+//     "@dropletdemo-r8dtp.mongodb.net/test?retryWrites=true",
+//   { useNewUrlParser: true }
+// );
+
 var app = express();
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
