@@ -1,15 +1,19 @@
 import React from "react";
 import {
   openShowName,
+  openDeleting,
   openFingerprinting
 } from "../../redux/fingerprint-me/actions";
 import { connect } from "react-redux";
 import {
   getName,
   getShowNameOpen,
-  getFingerprint
+  getFingerprintArray
 } from "../../redux/fingerprint-me/selectors";
-import { Button, Card, Table } from "antd";
+import { Button, Card, Table, Progress } from "antd";
+import { Fade } from "../fade";
+import { useReveal } from "../../utils";
+import { ANTD_RED, ANTD_GREEN } from "./constants";
 
 const columns = [
   {
@@ -22,55 +26,63 @@ const columns = [
   },
   {
     title: "Uniqueness",
-    dataIndex: "stat"
+    dataIndex: "stat",
+    render: val => (
+      <Progress
+        percent={val}
+        successPercent={0}
+        size="small"
+        strokeColor={val < 50 ? ANTD_RED : ANTD_GREEN}
+      />
+    )
   }
 ];
-
-const formatFingerprint = fingerprint =>
-  Object.keys(fingerprint).map((key, idx) => ({
-    name: key,
-    value: fingerprint[key],
-    stat: "0%",
-    key: idx
-  }));
 
 export const FingerprintShowName = ({
   open,
   name,
   fingerprint,
   stats,
-  openFingerprinting
+  openFingerprinting,
+  openDeleting
 }) => {
+  const [reveal, close] = useReveal(open);
   return (
     open && (
-      <div className="fingerprint-container">
-        <h1>Your Fingerprint</h1>
-        <Card bordered={false} className="fingerprint-card">
-          {console.log(formatFingerprint(fingerprint))}
-          <div className="fingerprint-rows">
-            <Table
-              dataSource={formatFingerprint(fingerprint)}
-              columns={columns}
-              pagination={false}
-              size="middle"
-              style={{ width: "100%" }}
-            />
-          </div>
-          <div className="fingerprint-buttons-container">
-            <Button
-              block
-              type="primary"
-              className="fingerprint-button"
-              onClick={openFingerprinting}
-            >
-              Try Again
-            </Button>
-            <Button block type="danger" className="fingerprint-button">
-              Delete Fingerprint
-            </Button>
-          </div>
-        </Card>
-      </div>
+      <Fade when={reveal}>
+        <div className="fingerprint-container">
+          <h1>Your Fingerprint</h1>
+          <Card bordered={false} className="fingerprint-card">
+            <div className="fingerprint-rows">
+              <Table
+                dataSource={fingerprint}
+                columns={columns}
+                pagination={false}
+                size="middle"
+                style={{ width: "100%" }}
+              />
+            </div>
+            <div className="fingerprint-buttons-container">
+              <Button
+                block
+                type="primary"
+                className="fingerprint-button"
+                onClick={close(openFingerprinting)}
+              >
+                Try Again
+              </Button>
+              <Button
+                block
+                type="danger"
+                className="fingerprint-button"
+                onClick={close(openDeleting)}
+              >
+                Delete Fingerprint
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </Fade>
     )
   );
 };
@@ -84,7 +96,7 @@ export default connect(
   state => ({
     open: getShowNameOpen(state),
     name: getName(state),
-    fingerprint: getFingerprint(state)
+    fingerprint: getFingerprintArray(state)
   }),
-  { openShowName, openFingerprinting }
+  { openShowName, openFingerprinting, openDeleting }
 )(FingerprintShowName);

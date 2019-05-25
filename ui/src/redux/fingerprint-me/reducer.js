@@ -7,7 +7,11 @@ import {
   FINGERPRINTING_OPEN,
   FINGERPRINT_SET,
   NAME_SET,
-  FINGERPRINTING_CLOSE
+  FINGERPRINTING_CLOSE,
+  MATCH_FOUND_OPEN,
+  DELETE_PROGRESS_SET,
+  DELETE_OPEN,
+  WARNING_OPEN
 } from "./actions";
 
 const initialState = {
@@ -16,8 +20,11 @@ const initialState = {
   enterNameOpen: false,
   fingerprintingOpen: false,
   showNameOpen: false,
+  matchFoundOpen: false,
+  deleteOpen: false,
   name: "",
   progress: 0,
+  deleteProgress: 100,
   fingerprint: {}
 };
 
@@ -27,18 +34,23 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         enterNameOpen: true,
-        fingerprintingOpen: false
+        fingerprintingOpen: false,
+        matchFoundOpen: false
       };
 
     case WARNING_CLOSE:
       return { ...state, warningOpen: false };
+
+    case WARNING_OPEN:
+      return { ...state, warningOpen: true, deleteOpen: false };
 
     case FINGERPRINTING_OPEN:
       return {
         ...state,
         fingerprintingOpen: true,
         warningOpen: false,
-        showNameOpen: false
+        showNameOpen: false,
+        matchFoundOpen: false
       };
 
     case ENTER_NAME_CLOSE:
@@ -53,7 +65,8 @@ const reducer = (state = initialState, { type, payload }) => {
         showNameOpen: true,
         fingerprintingOpen: false,
         enterNameOpen: false,
-        name: payload || state.name
+        name: payload || state.name,
+        matchFoundOpen: false
       };
 
     case PROGRESS_SET:
@@ -64,6 +77,15 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case FINGERPRINTING_CLOSE:
       return { ...state, fingerprintingOpen: false };
+
+    case MATCH_FOUND_OPEN:
+      return { ...state, matchFoundOpen: true, fingerprintingOpen: false };
+
+    case DELETE_PROGRESS_SET:
+      return { ...state, deleteProgress: payload };
+
+    case DELETE_OPEN:
+      return { ...state, deleteOpen: true, showNameOpen: false };
 
     default:
       return state;

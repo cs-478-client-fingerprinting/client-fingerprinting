@@ -1,5 +1,6 @@
 import { request, sleep } from "../../utils";
-import { md5 } from "md5";
+import md5 from "md5";
+import { getFingerprint, getName } from "./selectors";
 
 export const FINGERPRINT_CREATE = "FINGERPRINT_CREATE";
 export const FINGERPRINT_SET = "FINGERPRINT_SET";
@@ -11,6 +12,10 @@ export const PROGRESS_SET = "PROGRESS_SET";
 export const FINGERPRINTING_OPEN = "FINGERPRINTING_OPEN";
 export const NAME_SET = "NAME_SET";
 export const FINGERPRINTING_CLOSE = "FINGERPRINTING_CLOSE";
+export const MATCH_FOUND_OPEN = "MATCH_FOUND_OPEN";
+export const DELETE_PROGRESS_SET = "DELETE_PROGRESS_SET";
+export const DELETE_OPEN = "DELETE_OPEN";
+export const WARNING_OPEN = "WARNING_OPEN";
 
 const createCanvasFingerprint = canvas => {
   const ctx = canvas.current.getContext("2d");
@@ -31,16 +36,16 @@ const createCanvasFingerprint = canvas => {
   ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
   ctx.fillText(txt, 4, 17);
 
-  return console.log(md5(canvas.current.toDataURL()));
+  return md5(canvas.current.toDataURL());
 };
 
 const createFingerprint = canvas => ({
-  pixelDepth: window.screen.pixelDepth,
-  canvas: createCanvasFingerprint(canvas)
+  PixelDepth: window.screen.pixelDepth,
+  CanvasFingerprintHash: createCanvasFingerprint(canvas)
 });
 
 /* Actions */
-export const startFingerprinting = canvas => async (dispatch, getState) => {
+export const startFingerprinting = (canvas, close) => async dispatch => {
   const fingerprint = createFingerprint(canvas);
   console.log(window, fingerprint);
 
@@ -56,20 +61,42 @@ export const startFingerprinting = canvas => async (dispatch, getState) => {
   res.name && dispatch(setName(res.name));
   dispatch(setProgress(100));
 
-  await sleep(600);
-  dispatch(res.exists ? openShowName() : openEnterName());
+  await sleep(800);
+  close(() => dispatch(res.exists ? openMatchFound() : openEnterName()))();
   dispatch(setProgress(0));
 };
 
-export const handleNameFormSubmit = name => dispatch => e => {
-  e.preventDefault();
-  e.stopPropagation();
+export const handleNameFormSubmit = name => (dispatch, getStore) => e => {
+  e && e.preventDefault();
+  e && e.stopPropagation();
+  request("/fingerprint", {
+    body: { fingerprint: getFingerprint(getStore()), name },
+    method: "PUT"
+  });
   dispatch(openShowName(name));
+};
+
+export const deleteFingerprint = close => async (dispatch, getStore) => {
+  await sleep(200);
+  dispatch(setDeleteProgress(80));
+  await request("/fingerprint", {
+    body: getName(getStore()),
+    method: "DELETE"
+  });
+  dispatch(setDeleteProgress(0));
+  await sleep(200);
+  close(() => dispatch(openWarning()))();
+  dispatch(setDeleteProgress(100));
 };
 
 /* Action Creators */
 export const closeWarning = payload => ({
   type: WARNING_CLOSE,
+  payload
+});
+
+export const openWarning = payload => ({
+  type: WARNING_OPEN,
   payload
 });
 
@@ -110,5 +137,20 @@ export const setName = payload => ({
 
 export const closeFingerprinting = payload => ({
   type: FINGERPRINTING_CLOSE,
+  payload
+});
+
+export const openMatchFound = payload => ({
+  type: MATCH_FOUND_OPEN,
+  payload
+});
+
+export const openDeleting = payload => ({
+  type: DELETE_OPEN,
+  payload
+});
+
+export const setDeleteProgress = payload => ({
+  type: DELETE_PROGRESS_SET,
   payload
 });

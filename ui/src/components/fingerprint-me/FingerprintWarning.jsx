@@ -3,7 +3,7 @@ import { Card, Button } from "antd";
 import { connect } from "react-redux";
 import { openFingerprinting } from "../../redux/fingerprint-me/actions";
 import { getWarningOpen } from "../../redux/fingerprint-me/selectors";
-import { Fade } from "react-reveal";
+import { Fade } from "../fade";
 import { useReveal } from "../../utils";
 
 export const FingerprintWarning = ({ open, openFingerprinting }) => {
@@ -11,7 +11,7 @@ export const FingerprintWarning = ({ open, openFingerprinting }) => {
 
   return (
     open && (
-      <Fade opposite when={reveal} on>
+      <Fade when={reveal}>
         <Card className="fingerprint-warning">
           <h3 className="title">This site will fingerprint you</h3>
           <p className="lead">
@@ -24,7 +24,7 @@ export const FingerprintWarning = ({ open, openFingerprinting }) => {
             className="button"
             block
             type="primary"
-            onClick={close}
+            onClick={close(openFingerprinting)}
           >
             Fingerprint Me
           </Button>
