@@ -11,7 +11,8 @@ import {
   MATCH_FOUND_OPEN,
   DELETE_PROGRESS_SET,
   DELETE_OPEN,
-  WARNING_OPEN
+  WARNING_OPEN,
+  UNIQUENESS_SET
 } from "./actions";
 
 const initialState = {
@@ -25,7 +26,8 @@ const initialState = {
   name: "",
   progress: 0,
   deleteProgress: 100,
-  fingerprint: {}
+  fingerprint: {},
+  uniqueness: {}
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -86,6 +88,9 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case DELETE_OPEN:
       return { ...state, deleteOpen: true, showNameOpen: false };
+
+    case UNIQUENESS_SET:
+      return { ...state, uniqueness: payload };
 
     default:
       return state;

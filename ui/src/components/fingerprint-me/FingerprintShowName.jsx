@@ -17,16 +17,17 @@ import { ANTD_RED, ANTD_GREEN } from "./constants";
 
 const columns = [
   {
-    title: "Component",
+    title: "Metric",
     dataIndex: "name"
   },
   {
     title: "Value",
-    dataIndex: "value"
+    dataIndex: "value",
+    className: "table-value-col"
   },
   {
     title: "Uniqueness",
-    dataIndex: "stat",
+    dataIndex: "uniqueness",
     render: val => (
       <Progress
         percent={val}
@@ -42,7 +43,6 @@ export const FingerprintShowName = ({
   open,
   name,
   fingerprint,
-  stats,
   openFingerprinting,
   openDeleting
 }) => {
@@ -57,9 +57,7 @@ export const FingerprintShowName = ({
               <Table
                 dataSource={fingerprint}
                 columns={columns}
-                pagination={false}
-                size="middle"
-                style={{ width: "100%" }}
+                pagination={{ pageSize: 5 }}
               />
             </div>
             <div className="fingerprint-buttons-container">

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Progress } from "antd";
 import { connect } from "react-redux";
 import {
@@ -14,7 +14,7 @@ export const FingerprintDeleting = ({ open, progress, deleteFingerprint }) => {
 
   useEffect(() => {
     open === true && deleteFingerprint(close);
-  }, [open, deleteFingerprint]);
+  }, [open]);
 
   return (
     open && (
