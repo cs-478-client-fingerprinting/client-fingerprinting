@@ -3,16 +3,18 @@ import { join } from "path";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import { json, urlencoded } from "body-parser";
+import mongoose from "mongoose";
 
 import fingerprint from "./routes/fingerprint";
 
 // DB Init
-// mongoose.connect(
-//   "mongodb+srv://admin:" +
-//     process.env.MONGO_ATLAS_PW +
-//     "@dropletdemo-r8dtp.mongodb.net/test?retryWrites=true",
-//   { useNewUrlParser: true }
-// );
+console.log(process.env.MONGO_PASSWORD);
+mongoose.connect(
+  `mongodb://root:${process.env.MONGO_PASSWORD}@mongo:27017/fingerprints`,
+  {
+    useNewUrlParser: true
+  }
+);
 
 var app = express();
 

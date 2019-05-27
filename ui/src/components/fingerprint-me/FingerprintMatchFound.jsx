@@ -18,7 +18,7 @@ const FingerprintMatchFound = ({ open, name, openShowName, openEnterName }) => {
   return (
     open && (
       <Fade when={reveal}>
-        <Card>
+        <Card className="delete">
           <h3>Are You {name}?</h3>
           <div className="fingerprint-buttons-container">
             <Button

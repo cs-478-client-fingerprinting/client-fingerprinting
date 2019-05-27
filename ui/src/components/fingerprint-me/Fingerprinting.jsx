@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Progress } from "antd";
 import { connect } from "react-redux";
 import {
@@ -10,12 +10,11 @@ import { useReveal } from "../../utils";
 import { Fade } from "../fade";
 
 export const Fingerprinting = ({ open, progress, startFingerprinting }) => {
-  const canvasRef = useRef(null);
   const [reveal, close] = useReveal(open);
 
   useEffect(() => {
-    open === true && startFingerprinting(canvasRef, close);
-  }, [open, startFingerprinting]);
+    open === true && startFingerprinting(close);
+  }, [open]);
 
   return (
     open && (
@@ -29,7 +28,6 @@ export const Fingerprinting = ({ open, progress, startFingerprinting }) => {
               to: "#87d068"
             }}
           />
-          <canvas id="canvas" ref={canvasRef} />
         </div>
       </Fade>
     )
